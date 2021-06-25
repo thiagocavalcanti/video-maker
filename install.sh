@@ -33,7 +33,7 @@ else
     exit 1
 fi
 
-for x in cut tar gzip sudo; do
+for x in cut tar gzip; do
     which $x > /dev/null || (echo "Unable to continue.  Please install $x before proceeding."; exit 1)
 done
 
@@ -46,11 +46,11 @@ if [ $IS_CURL_INSTALLED -eq 0 ]; then
     CONFIRM_CURL=${CONFIRM_CURL:-Y}
     if [ "$CONFIRM_CURL" == "Y" ] || ["$CONFIRM_CURL" == "Y"]; then
         if [ "$DISTRO" == "Ubuntu" ] || [ "$DISTRO" == "Debian" ]; then
-            sudo apt-get install curl -y
+            apt-get install curl -y
         elif [ "$DISTRO" == "Amazon" ] || [ "$DISTRO" == "CentOS" ] || [ "$DISTRO" == "Red Hat" ]; then
-            sudo yum install curl -y
+            yum install curl -y
         elif [ "$DISTRO" == "SUSE" ]; then
-            sudo zypper -n install curl
+            zypper -n install curl
         else
             echo "Unable to continue. Please install curl manually before proceeding."; exit 131
         fi
@@ -86,10 +86,10 @@ RELEASE_URL="https://github.com/newrelic/newrelic-cli/releases/download/v${VERSI
 curl -sL --retry 3 "${RELEASE_URL}" | tar -xz
 
 if [ "$UID" != "0" ]; then
-    echo "Installing to $DESTDIR using sudo"
-    sudo mv newrelic "$DESTDIR"
-    sudo chmod +x "$DESTDIR/newrelic"
-    sudo chown root:0 "$DESTDIR/newrelic"
+    echo "Installing to $DESTDIR using sudo(exp)"
+    mv newrelic "$DESTDIR"
+    chmod +x "$DESTDIR/newrelic"
+    chown root:0 "$DESTDIR/newrelic"
 else
     echo "Installing to $DESTDIR"
     mv newrelic "$DESTDIR"
